@@ -15,6 +15,8 @@ elif [[ $BUNDLE_URL ]]; then
   cd /tmp/bundle/
 elif [ -d /built_app ]; then
   cd /built_app
+elif [ -d /dev_app ]; then
+  export RUN_NO_BUILD=1
 else
   echo "=> You don't have an meteor app to run in this image."
   exit 1
@@ -40,5 +42,11 @@ fi
 # Honour already existing PORT setup
 export PORT=${PORT:-80}
 
-echo "=> Starting meteor app on port:$PORT"
-node main.js
+if [[ $RUN_NO_BUILD ]]; then
+  echo "=> Starting meteor app on port:3000"
+  cd /dev_app
+  meteor
+else
+  echo "=> Starting meteor app on port:$PORT"
+  node main.js
+fi

@@ -1,0 +1,2 @@
+FROM bingofresh/meteord:devbuild
+
